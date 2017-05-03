@@ -1,0 +1,10 @@
+public:
+    std::string GetHtmlTable()
+    {
+        std::stringstream m_htmlTtable;
+    
+        m_htmlTtable << m_tableStart << m_tableCaption << m_tableEnd;
+
+        return m_htmlTtable.str();
+    } 
+    

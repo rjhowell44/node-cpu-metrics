@@ -1,0 +1,23 @@
+language: node_js
+
+node_js:
+  - "4"
+  - "6"
+  
+env:
+ - CXX=g++-4.8
+ 
+addons:
+ apt:
+  sources:
+   - ubuntu-toolchain-r-test
+  packages:
+   - g++-4.8
+   
+install:
+  - npm install
+  - mkdir -p $HOME/bin
+  - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux-dev.tgz | tar -zxvf- -C $HOME/bin
+  - testspace config url http://${TESTSPACE_ACCESS_TOKEN}:@robert.stridespace.com  
+  
+after_script:  
