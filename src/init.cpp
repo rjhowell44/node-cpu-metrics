@@ -30,18 +30,18 @@ extern "C" {
     
 void init (v8::Handle <v8::Object> exports, v8::Handle<v8::Object> module)
 {
-    // Instantiate the Singleton Heap Stats Object
-    heap_metrics::InitHeapStats();
+    // Instantiate the Singleton Heap Metrics Object
+    heap_metrics::InitHeapMetrics();
 
     // Map the client API's
-    NODE_SET_METHOD(exports, "DumpHeapStats", heap_metrics::DumpHeapStats);
+    NODE_SET_METHOD(exports, "DumpHeapMetrics", heap_metrics::DumpHeapMetrics);
     NODE_SET_METHOD(exports, "ForceGC", heap_metrics::ForceGC);
 }
 
 // Associate the init() function (above) as the entry point to the Node module. 
 // The function will be invoked on execution of the JavaScript require():
 //
-//     const heapstats = require( 'heapstats.node' );
+//     const heap_metrics = require( 'metrics.node' );
 
 NODE_MODULE(heap_metrics, init);
 
