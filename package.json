@@ -15,7 +15,7 @@
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "node_modules/.bin/mocha tests"
+    "test": "./index.js"
   },
   "devDependencies": {
     "mocha": "*"
