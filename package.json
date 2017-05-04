@@ -8,14 +8,14 @@
     "type": "git",
     "url": "https://github.com/rjhowell44/node-heap-metrics.git"
   },
-  "main": "include.js",
+  "main": "./include.js",
   "licenses": [ { "type": "MIT" } ],
   "bugs": {
     "url" : "https://github.com/rjhowell44/node-heap-metrics/issues"
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "./index.js"
+    "test": "./include.js"
   },
   "devDependencies": {
     "mocha": "*"
