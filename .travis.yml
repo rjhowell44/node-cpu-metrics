@@ -19,5 +19,6 @@ install:
   - mkdir -p $HOME/bin
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux-dev.tgz | tar -zxvf- -C $HOME/bin
   - testspace config url http://${TESTSPACE_ACCESS_TOKEN}:@robert.stridespace.com  
+  - echo testspace -v
   
 after_script:  
