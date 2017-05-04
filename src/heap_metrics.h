@@ -36,12 +36,12 @@ THE SOFTWARE.
 namespace heap_metrics 
 {
     
-class HeapStats : public node::ObjectWrap
+class HeapMetrics : public node::ObjectWrap
 {
     private:
     
         // Instance pointer for the singleton object
-        static HeapStats * m_pInstance;
+        static HeapMetrics * m_pInstance;
         
         v8::Isolate * m_pIsolate;
         
@@ -58,16 +58,16 @@ class HeapStats : public node::ObjectWrap
 
 
     protected:
-        HeapStats();
-        ~HeapStats();
+        HeapMetrics();
+        ~HeapMetrics();
     
     public:
-        static HeapStats * GetInstance();
-        void DumpHeapStats(const v8::FunctionCallbackInfo<v8::Value> & args);
+        static HeapMetrics * GetInstance();
+        void DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args);
         
         // Note: to be called by the GCC prologue call back only.  
         // Must be public to expose to the C callback.
-        void UpdateHeapStats();
+        void UpdateHeapMetrics();
 
     private:
         std::string bytesToStr(int bytes);
@@ -77,16 +77,16 @@ class HeapStats : public node::ObjectWrap
 
 // C style wrapper functions
 
-/// Called by init.cpp to instantiate the singlton HeapStats object.
-void InitHeapStats();
+/// Called by init.cpp to instantiate the singlton HeapMetrics object.
+void InitHeapMetrics();
 
 // Called be the 'using' script to Dump all current statistics to heapstats.md
-void DumpHeapStats(const v8::FunctionCallbackInfo<v8::Value> & args);
+void DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args);
 
 // Called by the 'client' script to Force GC/ S
 void ForceGC(const v8::FunctionCallbackInfo<v8::Value> & args);
 
 
-};  // namespace HeapStats
+};  // namespace HeapMetrics
 
 #endif // __HEAP_STATISTICS_H__

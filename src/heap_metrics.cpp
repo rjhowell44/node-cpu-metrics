@@ -35,22 +35,22 @@ namespace heap_metrics
 void UpdateHeapValuesGCC(v8::Isolate *isolate, v8::GCType type, v8::GCCallbackFlags flags);
 
 // Global static pointer used to ensure a single instance of the class.
-HeapStats* HeapStats::m_pInstance = NULL; 
+HeapMetrics* HeapMetrics::m_pInstance = NULL; 
 
-const char* HeapStats::m_pColumnHeaders[] = { "Metric", "Size At Ctor", "Size At Peak", "Size At Last", NULL };
+const char* HeapMetrics::m_pColumnHeaders[] = { "Metric", "Size At Ctor", "Size At Peak", "Size At Last", NULL };
 
 
 // Returns the singleton Object. 
-HeapStats* HeapStats::GetInstance()
+HeapMetrics* HeapMetrics::GetInstance()
 {
    // create the singlton instance on first call only    
    if (!m_pInstance)   
-      m_pInstance = new HeapStats;
+      m_pInstance = new HeapMetrics;
 
    return m_pInstance;
 }
 
-HeapStats::HeapStats()
+HeapMetrics::HeapMetrics()
 {
     m_pIsolate = v8::Isolate::GetCurrent();
     m_pHeapProfiler = m_pIsolate->GetHeapProfiler();	
@@ -76,7 +76,7 @@ HeapStats::HeapStats()
     m_pTotalPhysicalSize->SetSizeAtCtor(heapStatistics.total_physical_size());
 }
 
-HeapStats::~HeapStats()
+HeapMetrics::~HeapMetrics()
 {
     m_pHeapProfiler->StopTrackingHeapObjects(); 
 
@@ -102,7 +102,7 @@ HeapStats::~HeapStats()
 }
 
 
-void HeapStats::DumpHeapStats(const v8::FunctionCallbackInfo<v8::Value> & args)
+void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)
 {
     v8::HeapStatistics heapStatistics;
 
@@ -110,7 +110,7 @@ void HeapStats::DumpHeapStats(const v8::FunctionCallbackInfo<v8::Value> & args)
     m_pIsolate->GetHeapStatistics(&heapStatistics);
     
     // Update the running peak heap, usage, and total physical sizes
-    UpdateHeapStats();
+    UpdateHeapMetrics();
 
     std::stringstream tableCaption;
     tableCaption << "Peak values checked over " << m_GCPrologueCallbackCalled << " GC Prologue Notifications \n";
@@ -178,11 +178,11 @@ void HeapStats::DumpHeapStats(const v8::FunctionCallbackInfo<v8::Value> & args)
     csvFile.close();    
     
 
-    // void return
-    //args.GetReturnValue().Set(v8::String::NewFromUtf8(m_pIsolate, ss.str().c_str()));
+    // bool return
+    args.GetReturnValue().Set(v8::Boolean::New(m_pIsolate, true));
 }
 
-void HeapStats::UpdateHeapStats()
+void HeapMetrics::UpdateHeapMetrics()
 {
     v8::HeapStatistics heapStatistics;
 
@@ -205,23 +205,23 @@ void HeapStats::UpdateHeapStats()
 
 void UpdateHeapValuesGCC(v8::Isolate *isolate, v8::GCType type, v8::GCCallbackFlags flags)
 {
-	HeapStats * pHeapStats = HeapStats::GetInstance();
+	HeapMetrics * pHeapMetrics = HeapMetrics::GetInstance();
 	
-	pHeapStats->UpdateHeapStats();
+	pHeapMetrics->UpdateHeapMetrics();
 }
 
 // ---------------------------------------------------------------------------------------
 // Wrapper functions
 
-void InitHeapStats()
+void InitHeapMetrics()
 {
     // Instatiate the singlton object
-	HeapStats::GetInstance();
+	HeapMetrics::GetInstance();
 }
 
-void DumpHeapStats(const v8::FunctionCallbackInfo<v8::Value> & args)
+void DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)
 {
-	HeapStats::GetInstance()->DumpHeapStats( args );
+	HeapMetrics::GetInstance()->DumpHeapMetrics( args );
 }
 
 void ForceGC(const v8::FunctionCallbackInfo<v8::Value> & args)
