@@ -21,4 +21,4 @@ install:
   - testspace config url http://${TESTSPACE_ACCESS_TOKEN}:@robert.stridespace.com
 
 after_script:  
-  - testspace [Metrics].\heap-metrics.md{.\heap-metrics.csv}
+  - testspace [Metrics]./heap-metrics.md{./heap-metrics.csv}
