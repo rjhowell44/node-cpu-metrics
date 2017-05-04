@@ -14,7 +14,7 @@
     "url" : "https://github.com/rjhowell44/node-heap-metrics/issues"
   },
   "scripts": {
-    "install": "node-gyp rebuild",
+    "install": "node-gyp rebuild"
   },
   "devDependencies": {
     "mocha": "*"
