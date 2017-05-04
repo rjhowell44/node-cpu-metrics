@@ -15,7 +15,7 @@
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "node Test/consume_heap.js"
+    "test": "mocha ./Test/consume_heap.js"
   },
   "devDependencies": {
     "mocha": "*"
