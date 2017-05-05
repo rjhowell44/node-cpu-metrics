@@ -3,6 +3,7 @@ var assert = require('assert');
 
 function consume_heap()
 {
+    {
     var garbage = [];
     
     
@@ -16,7 +17,7 @@ function consume_heap()
 
 describe('DumpHeapMetrics', function(){
   it('should return true', function(){
-    for(var i=0;i<100;i++){  
+    for(var i=0;i<120;i++){  
         consume_heap();  
     }
     assert(heap_metrics.DumpHeapMetrics());
