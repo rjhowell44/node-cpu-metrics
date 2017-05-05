@@ -135,14 +135,19 @@ void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & ar
     strftime(buffer.data(), sizeof(buffer), "%m-%d-%Y : %H-%M-%S", timeinfo);
     std::string timeStr(buffer.data());
 
-    const char* HOME;
+    // if(args.Length() < 1 || !args[0]->IsArrayt()) {
+    //     // bad dump destination, so return false
+    //     args.GetReturnValue().Set(v8::Boolean::New(m_pIsolate, false));
+    // }
+
+const char* HOME;
     if ((HOME = getenv("HOME")) == NULL)
     {
         args.GetReturnValue().Set(v8::String::NewFromUtf8(m_pIsolate, "HOME == NULL"));
     }
     
     std::stringstream mdPath;
-    mdPath << HOME << "/workspace/heap-metrics.md";
+    mdPath << HOME << "/bin/heap-metrics.md";
 
     std::fstream mdFile;
     mdFile.open(mdPath.str().c_str(), std::fstream::out);
@@ -166,7 +171,7 @@ void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & ar
     mdFile.close();    
     
     std::stringstream csvPath;
-    csvPath << HOME << "/workspace/heap-metrics.csv";
+    csvPath << HOME << "/bin/heap-metrics.csv";
 
     std::fstream csvFile;
     csvFile.open(csvPath.str().c_str(), std::fstream::out);
@@ -176,7 +181,6 @@ void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & ar
     csvFile << "Peak Physical Size, " <<  m_pTotalPhysicalSize->GetSizeAtPeakStr() << "\n";
     
     csvFile.close();    
-    
 
     // bool return
     args.GetReturnValue().Set(v8::Boolean::New(m_pIsolate, true));
