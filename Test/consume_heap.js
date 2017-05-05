@@ -3,7 +3,6 @@ var assert = require('assert');
 
 function consume_heap()
 {
-    {
     var garbage = [];
     
     
