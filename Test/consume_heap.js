@@ -6,7 +6,7 @@ function consume_heap()
     var garbage = [];
     
     
-    for (var i=0; i<125000; i++)
+    for (var i=0; i<128000; i++)
     {
         garbage.push("this is a long string to consume heap memory... lets make it a little longer... and longer still... why stop now");
 
