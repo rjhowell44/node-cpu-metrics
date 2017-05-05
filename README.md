@@ -45,6 +45,8 @@ with the following content.
   
 ```
 
+![heap_metrics](https://github.com/rjhowell44/node-heap-metrics/blob/master/images/heap-usage-vs-gc-events.png)
+
 ---
 ### Usage
 
