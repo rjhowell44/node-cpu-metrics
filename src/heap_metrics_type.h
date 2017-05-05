@@ -64,20 +64,28 @@ public:
 
     inline void SetSizeAtCtor(size_t size) { m_sizeAtCtor = size; } 
     inline size_t GetSizeAtCtor() { return m_sizeAtCtor; }
-    inline std::string GetSizeAtCtorStr() { std::stringstream ss; ss << bytesToKbStr(m_sizeAtCtor).c_str(); return ss.str(); }
+    size_t GetKbSizeAtCtor() { return bytesToKb(m_sizeAtCtor); }
+    std::string GetSizeAtCtorStr() { std::stringstream ss; ss << bytesToKbStr(m_sizeAtCtor).c_str(); return ss.str(); }
 
     inline void SetSizeAtPeak(size_t size) { m_sizeAtPeak = size; } 
     inline size_t GetSizeAtPeak() { return m_sizeAtPeak; }
-    inline std::string GetSizeAtPeakStr() { std::stringstream ss; ss << bytesToKbStr(m_sizeAtPeak).c_str(); return ss.str(); }
+    size_t GetKbSizeAtPeak() { return bytesToKb(m_sizeAtPeak); }
+    std::string GetSizeAtPeakStr() { std::stringstream ss; ss << bytesToKbStr(m_sizeAtPeak).c_str(); return ss.str(); }
 
     inline void SetSizeAtLast(size_t size) { m_sizeAtLast = size; } 
     inline size_t GetSizeAtLast() { return m_sizeAtLast; }
-    inline std::string GetSizeAtLastStr() { std::stringstream ss; ss << bytesToKbStr(m_sizeAtLast).c_str(); return ss.str(); }
+    size_t GetKbSizeAtLast() { return bytesToKb(m_sizeAtLast); }
+    std::string GetSizeAtLastStr() { std::stringstream ss; ss << bytesToKbStr(m_sizeAtLast).c_str(); return ss.str(); }
 
+    size_t bytesToKb(int bytes)
+    {
+        return static_cast<size_t>(round(bytes / (((double) 1024 ) / 100) / (double) 100));        
+    }
+    
     std::string bytesToKbStr(int bytes) 
     {
 
-        std::string kbNumberString = std::to_string((int)round(bytes / (((double) 1024 ) / 100) / (double) 100));
+        std::string kbNumberString = std::to_string(bytesToKb(bytes));
         std::stringstream kbNumberStringWithCommas;
         
         int insertPosition = kbNumberString.length() - 3;

@@ -176,7 +176,7 @@ const char* HOME;
     std::fstream csvFile;
     csvFile.open(csvPath.str().c_str(), std::fstream::out);
     
-    csvFile << "Peak Sizes, " <<  m_pUsedHeapSize->GetSizeAtPeakStr() << ", " << m_pTotalHeapSize->GetSizeAtPeakStr() << ", " << m_pTotalPhysicalSize->GetSizeAtPeakStr() << "\n";
+    csvFile << "Peak Sizes, " <<  m_pUsedHeapSize->GetKbSizeAtPeak() << ", " << m_pTotalHeapSize->GetKbSizeAtPeak() << ", " << m_pTotalPhysicalSize->GetKbSizeAtPeak() << "\n";
     
     csvFile.close();    
 
