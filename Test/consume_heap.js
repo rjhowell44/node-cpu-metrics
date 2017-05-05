@@ -8,7 +8,7 @@ function consume_heap()
     
     for (var i=0; i<1000; i++)
     {
-        garbage.push("this is a long string to consume heap memory... lets make it a little longer... and longer still");
+        garbage.push("this is a long string to consume heap memory... lets make it a little longer... and longer still... why stop now");
 
     }
 }
