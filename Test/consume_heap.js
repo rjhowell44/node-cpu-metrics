@@ -16,7 +16,7 @@ function consume_heap()
 
 describe('DumpHeapMetrics', function(){
   it('should return true', function(){
-    for(var i=0;i<10;i++){  
+    for(var i=0;i<100;i++){  
         consume_heap();  
     }
     assert(heap_metrics.DumpHeapMetrics());
