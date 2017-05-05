@@ -21,4 +21,4 @@ install:
   - testspace config url http://${TESTSPACE_ACCESS_TOKEN}:@robert.stridespace.com
 
 after_script:  
-  - testspace [Metrics]$HOME/bin/heap-metrics.md{$HOME/bin/heap-metrics.csv}
+  - testspace [Node-$TRAVIS_NODE_VERSION/Metrics]$HOME/bin/heap-metrics.md{$HOME/bin/heap-metrics.csv}
