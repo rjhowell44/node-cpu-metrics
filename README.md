@@ -47,13 +47,6 @@ This allows for the start profiling to be enabled from one script or node,  and 
 Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
 
 ![heap metrics](images/heap_metrics.png)
-</br>
-The `.csv file' (comma seperated values)  will contain the peak sizes ( heap used, heap size, physical size ) and the number of GC events.
-
-```
-Peak Sizes, 22048, 40491, 36661
-GC Prologue Notifications, 201
-```
 
 **Optionally** - you can then push the metric files -- along with the test results, code coverage, and other metrics -- to [Testspace](www.testspace.com) in your CI .yml file (Travis, Circle CI, AppYayor, etc) 
 (requires a free Testspace account)
