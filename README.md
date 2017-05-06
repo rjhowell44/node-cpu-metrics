@@ -43,15 +43,14 @@ Heap metrics, maintained by the node, are update on V8's garbage collection (GC)
  * Heap Size
  * Physical Size
 
-The class is implemented as a singleton. The first script to `require( 'heap_metrics.node' )` will intantiate the  object and **start heap profiling**. All subsequent calls to require() will return the singleton object will profilling is ongoing. 
-This allows for the start profiling to be enabled from one script or node,  and the DumpHeapMetrics() function to be called from another.   
+The class is implemented as a singleton. The first script to `require( 'heap_metrics.node' )` will intantiate the  object and **start heap profiling**. All subsequent calls to require() will return the singleton object while profilling is ongoing. 
 
 ---
 ### API Description
 
 calling `heap_metrics.GetHeap()` will return the following object
 
-```
+```javascript
 { 'Heap Size Limit': '1,499,136 KB',
   'GC Prologue Notifications': 360,
   'Heap Used Metrics': 
@@ -90,3 +89,24 @@ More important than the actual heap numbers are the trends over successive commi
 
 The charts above show an interesting price point of heap usage (on a Travis server).  When the `peek used size` exceeds the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 
+---
+### Metric Setup
+**Note:** *This is a onetime setup for a parent branch only. After using `git branch`, pushing test results and the above metric files from your CI -- running the new branch for the first time -- will create a new Space with all metric charts and settings from the parent branch automatically
+
+To setup the metrics shown above, once you've pushed the first set of metric files -- `heap_metrics.html` and `heap_metrics.cvs` -- to your Testspace Project:
+
+  1. from the Space that's connected to your repository, select the Metrics tab
+  2. from the Metrics tab, select the `New Metric` button top right.
+  3. from the New Metrics dialog, select the metric to create (from the heap_metrics.csv file)
+  4. select the `customize` button - see settings below for the two charts pictured above.
+ 
+*Note: This is a onetime setup for a parent branch only. After using `git branch`, pushing new result to the new branch will create a new Space with with all metric charts and settings from the parent branch
+<br>
+
+![new-metric-dialog](images/new-metric-dialog.png)
+<br>
+
+![peak-heap-metrics-settings](images/peak-heap-metrics-settings.png)
+<br>
+
+![new-metric-dialog](gc-event-metrics-settings.png)
