@@ -43,7 +43,7 @@ public:
 public:
     HeapMetricsTable(const char* tableCaption, const char ** columnHeadings)
     { 
-        m_tableStart   << "<table>\n";
+        m_tableStart   << "<table cellpadding='5'>\n";
         m_tableCaption << "  <caption><p><strong>" << tableCaption << "</strong></p></caption>\n"; 
         m_tableEnd     << "</table>\n";
 

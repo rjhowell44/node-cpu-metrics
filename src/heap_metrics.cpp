@@ -147,26 +147,29 @@ const char* HOME;
     }
     
     std::stringstream mdPath;
-    mdPath << HOME << "/bin/heap-metrics.md";
+    mdPath << HOME << "/bin/heap-metrics.html";
 
     std::fstream mdFile;
     mdFile.open(mdPath.str().c_str(), std::fstream::out);
-    
-    mdFile << "## Node Heap Metrics\n";
-    mdFile << "  * V8 Heap Profiler metrics recorded " << timeStr << "\n"; 
-    mdFile << "  * Heap size limit of " << m_pUsedHeapSize->bytesToKbStr(heapStatistics.heap_size_limit()) << " at module custruction (Ctor) \n";
-    mdFile << "\n";
-    mdFile << "---\n";
-    mdFile << m_pHeapMetricsTable->GetTable().c_str();    
-    mdFile << "\n";
-    mdFile << "\n";
-    mdFile << "<table>\n";
-    mdFile << "  <tr>\n";
-    mdFile << "    <td align='left'><font size='1.5'><a href='https://mit-license.org/'>Data captured by npm node-heap-metrics</a></font></td>\n";
-    mdFile << "    <td><font size='1.5'><a href='https://mit-license.org/'>Module usage licensed under MIT</a></font></td>\n";
-    mdFile << "    <td align='right'><font size='1.5'><a href='https://v8docs.nodesource.com/'>Official V8 Documentation</a></font></td>\n";
-    mdFile << "  </tr>\n";
-    mdFile << "</table>\n";
+
+    mdFile << "<article>\n";
+    mdFile << "  <header>\n";    
+    mdFile << "    <h1> Node Heap Metrics</h1>\n";
+    mdFile << "  </header>\n";
+    mdFile << "  <p>\n";
+    mdFile << "    V8 Heap Profiler metrics recorded " << timeStr << "\n"; 
+    mdFile << "  </br>\n";
+    mdFile << "    Heap size limit of " << m_pUsedHeapSize->bytesToKbStr(heapStatistics.heap_size_limit()) << " at node custruction (Ctor)\n";
+    mdFile << "  </p>\n";
+    mdFile <<    m_pHeapMetricsTable->GetTable().c_str();    
+    mdFile << "  <table cellpadding='2'>\n";
+    mdFile << "    <tr>\n";
+    mdFile << "      <td align='left'><font size='1.5'><a href='https://mit-license.org/'>Data captured by npm node-heap-metrics</a></font></td>\n";
+    mdFile << "      <td><font size='1.5'><a href='https://mit-license.org/'>Module usage licensed under MIT</a></font></td>\n";
+    mdFile << "      <td align='right'><font size='1.5'><a href='https://v8docs.nodesource.com/'>Official V8 Documentation</a></font></td>\n";
+    mdFile << "    </tr>\n";
+    mdFile << "  </table>\n";
+    mdFile << "<article>\n";
 
     mdFile.close();    
     

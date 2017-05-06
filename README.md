@@ -47,6 +47,7 @@ This allows for the start profiling to be enabled from one script or node,  and 
 Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling. (as of the current, initial release of 1.0.0)  
 
 The `HTML file` will render as follows:
+![heap_metrics.html](images/heap_metrics.png)
 
 The `.csv file' (comma seperated values)  will contain the peak sizes ( heap used, heap size, physical size ) and the number of GC events.
 
@@ -71,5 +72,5 @@ The following timeline charts were produced by pushing changes made to the test 
 
 More important than the actual heap numbers are the trends over successive commits, as they show unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code changes.  Unexplained increases can even be a sign of newly introduced memory leaks.  
 
-The charts below show an interesting price point of heap usage (on a Travis server).  When the `peek used size` exceeds the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
+The charts above show an interesting price point of heap usage (on a Travis server).  When the `peek used size` exceeds the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 

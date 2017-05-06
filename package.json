@@ -16,13 +16,14 @@
     "install": "node-gyp rebuild",
     "test": "mocha ./Test/consume_heap.js"
   },
-  "devDependencies": {},
   "keywords": [
     "heap",
     "memory",
     "peak",
     "measurements",
     "metrics",
+    "development",
+    "tools",
     "profiler",
     "V8"
   ],
