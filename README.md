@@ -46,9 +46,9 @@ This allows for the start profiling to be enabled from one script or node,  and 
 
 Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling. (as of the current, initial release of 1.0.0)  
 
-#### The HTML file will render as follows:
+The `HTML file` will render as follows:
 
-#### The .csv (comma seperated values) file will contain the peak sizes ( heap used, heap size, physical size ) and the number of GC events. 
+The `.csv file' (comma seperated values)  will contain the peak sizes ( heap used, heap size, physical size ) and the number of GC events.
 
 ```
 Peak Sizes, 22048, 40491, 36661
@@ -65,7 +65,11 @@ GC Prologue Notifications, 201
 
 ---
 ### Metric Trends
-The following timeline charts were produced by pushing changes to `Test/consume_heap.js` to this repository.  The testscript consumes heap memory which can be increasing or deacresing the for loop limit. The `metric files` are pushed from `.travis.yml` file above. 
+The following timeline charts were produced by pushing changes made to the test script `Test/consume_heap.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.
 
 ![heap_metrics](https://github.com/rjhowell44/node-heap-metrics/blob/master/images/heap-usage-vs-gc-events.png)
+
+More important than the actual heap numbers are the trends over successive commits, as they show unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code changes.  Unexplained increases can even be a sign of newly introduced memory leaks.  
+
+The charts below show an interesting price point of heap usage (on a Travis server).  When the `peek used size` exceeds the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 
