@@ -44,11 +44,9 @@ Heap metrics, maintained by the node, are update on V8's garbage collection (GC)
 The class is implemented as a singleton. The first script to `require( 'heap_metrics.node' )` will intantiate the  object and **start heap profiling**. All subsequent calls to require() will return the singleton object will profilling is ongoing. 
 This allows for the start profiling to be enabled from one script or node,  and the DumpHeapMetrics() function to be called from another.   
 
-Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling. (as of the current, initial release of 1.0.0)  
+Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
 
-The `HTML file` will render as follows:
-
-<img align="left"; src="images/heap_metrics.png"; width="40%"; alt="Connecting to GitHub Repositories">
+![heap metrics](images/heap_metrics.png)
 </br>
 The `.csv file' (comma seperated values)  will contain the peak sizes ( heap used, heap size, physical size ) and the number of GC events.
 
@@ -69,7 +67,7 @@ GC Prologue Notifications, 201
 ### Metric Trends
 The following timeline charts were produced by pushing changes made to the test script `Test/consume_heap.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.
 
-![heap_metrics](https://github.com/rjhowell44/node-heap-metrics/blob/master/images/heap-usage-vs-gc-events.png)
+![heap_metrics](images/heap-usage-vs-gc-events.png)
 
 More important than the actual heap numbers are the trends over successive commits, as they show unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code changes.  Unexplained increases can even be a sign of newly introduced memory leaks.  
 
