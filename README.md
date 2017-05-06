@@ -25,10 +25,12 @@ var heap_metrics = require( 'heap_metrics.node' );
 // optionally, force final GC before dump (requires --expose_gc)
 heap_metrics.ForceGC();
 
+// get metrics and log to console
+log.console(heap_metrics.GetHeapMetrics)
+
 // dump metrics to file
 heap_metrics.DumpHeapMetrics()
 ```
-
 
 ---
 ### Description
@@ -43,6 +45,28 @@ Heap metrics, maintained by the node, are update on V8's garbage collection (GC)
 
 The class is implemented as a singleton. The first script to `require( 'heap_metrics.node' )` will intantiate the  object and **start heap profiling**. All subsequent calls to require() will return the singleton object will profilling is ongoing. 
 This allows for the start profiling to be enabled from one script or node,  and the DumpHeapMetrics() function to be called from another.   
+
+---
+### API Description
+
+calling `heap_metrics.GetHeap()` will return the following object
+
+```
+{ 'Heap Size Limit': '1,499,136 KB',
+  'GC Prologue Notifications': 360,
+  'Heap Used Metrics': 
+   { 'At Ctor': '5,460 KB',
+     'At Peak': '21,907 KB',
+     'At last': '16,791 KB' },
+  'Heap Size Metrics': 
+   { 'At Ctor': '15,297 KB',
+     'At Peak': '39,483 KB',
+     'At last': '39,483 KB' },
+  'Physical Size Metrics': 
+   { 'At Ctor': '10,391 KB',
+     'At Peak': '36,259 KB',
+     'At last': '36,259 KB' } }
+```     
 
 Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
 

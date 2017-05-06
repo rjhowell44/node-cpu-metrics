@@ -14,7 +14,7 @@ function consume_heap()
 }
 
 
-describe('DumpHeapMetrics', function(){
+describe('GetHeapMetrics', function(){
   it('should return true', function(){
     for(var i=0;i<400;i++){  
         consume_heap();  
