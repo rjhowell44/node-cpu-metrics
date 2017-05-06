@@ -94,7 +94,7 @@ public:
             insertPosition-=3;
         }        
 
-        kbNumberStringWithCommas << kbNumberString.c_str() << " Kb";
+        kbNumberStringWithCommas << kbNumberString.c_str() << " KB";
 
         return kbNumberStringWithCommas.str();
     }
