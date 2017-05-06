@@ -47,8 +47,9 @@ This allows for the start profiling to be enabled from one script or node,  and 
 Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling. (as of the current, initial release of 1.0.0)  
 
 The `HTML file` will render as follows:
-![heap_metrics.html](images/heap_metrics.png)
 
+<img align="left"; src="images/heap_metrics.png"; width="40%"; alt="Connecting to GitHub Repositories">
+</br>
 The `.csv file' (comma seperated values)  will contain the peak sizes ( heap used, heap size, physical size ) and the number of GC events.
 
 ```
