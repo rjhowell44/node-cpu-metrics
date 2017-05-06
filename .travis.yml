@@ -18,7 +18,7 @@ install:
   - npm install
   - mkdir -p $HOME/bin
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux-dev.tgz | tar -zxvf- -C $HOME/bin
-  - testspace config url http://@robert.stridespace.com
+  - testspace config url http://${TESTSPACE_ACCESS_TOKEN}:@robert.stridespace.com
 
 after_script:  
   - testspace [Node-$TRAVIS_NODE_VERSION/Metrics]$HOME/bin/heap-metrics.html{$HOME/bin/heap-metrics.csv}
