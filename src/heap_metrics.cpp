@@ -68,6 +68,7 @@ HeapMetrics::HeapMetrics()
     v8::HeapStatistics heapStatistics;
     m_pIsolate->GetHeapStatistics(&heapStatistics);
     
+    m_HeapSizeLimitAtCtor = heapStatistics.heap_size_limit();
     m_pHeapMetricsTable = new HeapMetricsTable("Heap Metrics", m_pColumnHeaders);
 
     // Initialize the 'At Ctor' Heap Stats for each type.
@@ -101,31 +102,84 @@ HeapMetrics::~HeapMetrics()
     }
 }
 
-
-void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)
+void HeapMetrics::GetHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)
 {
-    v8::HeapStatistics heapStatistics;
-
-    // Get the current heap statistics
-    m_pIsolate->GetHeapStatistics(&heapStatistics);
-    
     // Update the running peak heap, usage, and total physical sizes
     UpdateHeapMetrics();
 
+    // ------------------------------------------------------------------------------------------
+    // assemble the metrics content - start with the number of GC events
+    
+    v8::Local<v8::Object> heapMetrics = v8::Object::New(m_pIsolate);  
+
+    heapMetrics->Set(v8::String::NewFromUtf8(m_pIsolate, "Heap Size Limit"), v8::String::NewFromUtf8(m_pIsolate,  m_pUsedHeapSize->bytesToKbStr(m_HeapSizeLimitAtCtor).c_str()));
+    heapMetrics->Set(v8::String::NewFromUtf8(m_pIsolate, "GC Prologue Notifications"), v8::Integer::New(m_pIsolate, m_GCPrologueCallbackCalled));
+
+    // ------------------------------------------------------------------------------------------
+    // assemble the heap used metrics
+    
+    v8::Local<v8::Object> heapUsed = v8::Object::New(m_pIsolate);  
+
+    heapUsed->Set(v8::String::NewFromUtf8(m_pIsolate, "At Ctor"), v8::String::NewFromUtf8(m_pIsolate, m_pUsedHeapSize->GetSizeAtCtorStr().c_str()));
+    heapUsed->Set(v8::String::NewFromUtf8(m_pIsolate, "At Peak"), v8::String::NewFromUtf8(m_pIsolate, m_pUsedHeapSize->GetSizeAtPeakStr().c_str()));
+    heapUsed->Set(v8::String::NewFromUtf8(m_pIsolate, "At last"), v8::String::NewFromUtf8(m_pIsolate, m_pUsedHeapSize->GetSizeAtLastStr().c_str()));
+
+    heapMetrics->Set(v8::String::NewFromUtf8(m_pIsolate, "Heap Used Metrics"), heapUsed); 
+
+    // ------------------------------------------------------------------------------------------
+    // assemble the heap size metrics
+    
+    v8::Local<v8::Object> heapSize = v8::Object::New(m_pIsolate);  
+
+    heapSize->Set(v8::String::NewFromUtf8(m_pIsolate, "At Ctor"), v8::String::NewFromUtf8(m_pIsolate, m_pTotalHeapSize->GetSizeAtCtorStr().c_str()));
+    heapSize->Set(v8::String::NewFromUtf8(m_pIsolate, "At Peak"), v8::String::NewFromUtf8(m_pIsolate, m_pTotalHeapSize->GetSizeAtPeakStr().c_str()));
+    heapSize->Set(v8::String::NewFromUtf8(m_pIsolate, "At last"), v8::String::NewFromUtf8(m_pIsolate, m_pTotalHeapSize->GetSizeAtLastStr().c_str()));
+
+    heapMetrics->Set(v8::String::NewFromUtf8(m_pIsolate, "Heap Size Metrics"), heapSize); 
+    
+    // ------------------------------------------------------------------------------------------
+    // assemble the physical size metrics
+    v8::Local<v8::Object> physicalSize = v8::Object::New(m_pIsolate);  
+
+    physicalSize->Set(v8::String::NewFromUtf8(m_pIsolate, "At Ctor"), v8::String::NewFromUtf8(m_pIsolate, m_pTotalPhysicalSize->GetSizeAtCtorStr().c_str()));
+    physicalSize->Set(v8::String::NewFromUtf8(m_pIsolate, "At Peak"), v8::String::NewFromUtf8(m_pIsolate, m_pTotalPhysicalSize->GetSizeAtPeakStr().c_str()));
+    physicalSize->Set(v8::String::NewFromUtf8(m_pIsolate, "At last"), v8::String::NewFromUtf8(m_pIsolate, m_pTotalPhysicalSize->GetSizeAtLastStr().c_str()));
+
+    heapMetrics->Set(v8::String::NewFromUtf8(m_pIsolate, "Physical Size Metrics"), physicalSize); 
+    
+    
+    // ------------------------------------------------------------------------------------------
+    // return the metrics to the calling script
+
+    args.GetReturnValue().Set(heapMetrics);
+}
+
+
+void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)
+{
+    // Update the running peak heap, usage, and total physical sizes
+    UpdateHeapMetrics();
+
+    // ------------------------------------------------------------------------------------------
+    // assemble the metrics table content - start with the table caption - number of GC events
+    
     std::stringstream tableCaption;
     tableCaption << "Peak values checked over " << m_GCPrologueCallbackCalled << " GC Prologue Notifications \n";
     m_pHeapMetricsTable->AddTableCaption(tableCaption.str().c_str());
     
-    // Add row data to the table
-    std::vector<std::string> usedHeapRow = { m_pUsedHeapSize->GetSizeAtCtorStr(), m_pUsedHeapSize->GetSizeAtPeakStr(), m_pUsedHeapSize->GetSizeAtLastStr() }; 
-
-    std::vector<std::string> totalHeapRow = { m_pTotalHeapSize->GetSizeAtCtorStr(), m_pTotalHeapSize->GetSizeAtPeakStr(), m_pTotalHeapSize->GetSizeAtLastStr() };    
-
+    // ------------------------------------------------------------------------------------------
+    // Add row data to the table - the "At Ctor" , "At Peak", and "At Last" values (columns) for the "Heap Used", "Heap Size", and "Physical Size" metrics (rows)
+    
+    std::vector<std::string> usedHeapRow =      { m_pUsedHeapSize->GetSizeAtCtorStr(),      m_pUsedHeapSize->GetSizeAtPeakStr(),      m_pUsedHeapSize->GetSizeAtLastStr()      }; 
+    std::vector<std::string> totalHeapRow =     { m_pTotalHeapSize->GetSizeAtCtorStr(),     m_pTotalHeapSize->GetSizeAtPeakStr(),     m_pTotalHeapSize->GetSizeAtLastStr()     };    
     std::vector<std::string> totalPhysicalRow = { m_pTotalPhysicalSize->GetSizeAtCtorStr(), m_pTotalPhysicalSize->GetSizeAtPeakStr(), m_pTotalPhysicalSize->GetSizeAtLastStr() };
         
     m_pHeapMetricsTable->AddTableRow("Used Heap Size", usedHeapRow);
     m_pHeapMetricsTable->AddTableRow("Total Heap Size", totalHeapRow);
     m_pHeapMetricsTable->AddTableRow("Total Physical Size", totalPhysicalRow);
+    
+    // ------------------------------------------------------------------------------------------
+    // Date and Timestamp for Dump
     
     std::array<char, 64> buffer;
     buffer.fill(0);
@@ -135,22 +189,25 @@ void HeapMetrics::DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & ar
     strftime(buffer.data(), sizeof(buffer), "%m-%d-%Y : %H-%M-%S", timeinfo);
     std::string timeStr(buffer.data());
 
-    // if(args.Length() < 1 || !args[0]->IsArrayt()) {
-    //     // bad dump destination, so return false
-    //     args.GetReturnValue().Set(v8::Boolean::New(m_pIsolate, false));
-    // }
+    // ------------------------------------------------------------------------------------------
+    // Assemble the pathspecs for the HTML and CSV files. 
 
-const char* HOME;
+    const char* HOME;
     if ((HOME = getenv("HOME")) == NULL)
     {
         args.GetReturnValue().Set(v8::String::NewFromUtf8(m_pIsolate, "HOME == NULL"));
     }
     
-    std::stringstream mdPath;
-    mdPath << HOME << "/bin/heap-metrics.html";
+    std::stringstream htmlPath, csvPath;
+    htmlPath << HOME << "/bin/heap-metrics.html";
+    csvPath << HOME << "/bin/heap-metrics.csv";
+
+
+    // ------------------------------------------------------------------------------------------
+    // Assemble and stream the HTML content to file
 
     std::fstream mdFile;
-    mdFile.open(mdPath.str().c_str(), std::fstream::out);
+    mdFile.open(htmlPath.str().c_str(), std::fstream::out);
 
     mdFile << "<article>\n";
     mdFile << "  <header>\n";    
@@ -159,23 +216,22 @@ const char* HOME;
     mdFile << "  <p>\n";
     mdFile << "    V8 Heap Profiler metrics recorded " << timeStr << "\n"; 
     mdFile << "  </br>\n";
-    mdFile << "    Heap size limit of " << m_pUsedHeapSize->bytesToKbStr(heapStatistics.heap_size_limit()) << " at node custruction (Ctor)\n";
+    mdFile << "    Heap size limit of " << m_pUsedHeapSize->bytesToKbStr(m_HeapSizeLimitAtCtor) << " at node custruction (Ctor)\n";
     mdFile << "  </p>\n";
     mdFile <<    m_pHeapMetricsTable->GetTable().c_str();    
     mdFile << "  <table cellpadding='2'>\n";
     mdFile << "    <tr>\n";
-    mdFile << "      <td align='left'><font size='1.5'><a href='https://mit-license.org/'>Data captured by npm node-heap-metrics</a></font></td>\n";
-    mdFile << "      <td><font size='1.5'><a href='https://mit-license.org/'>Module usage licensed under MIT</a></font></td>\n";
-    mdFile << "      <td align='right'><font size='1.5'><a href='https://v8docs.nodesource.com/'>Official V8 Documentation</a></font></td>\n";
+    mdFile << "      <td align='left'><font size='1.5'><a href='https://mit-license.org/'target='_blank'>Data captured by npm node-heap-metrics</a></font></td>\n";
+    mdFile << "      <td><font size='1.5'><a href='https://mit-license.org/'target='_blank'>Module usage licensed under MIT</a></font></td>\n";
+    mdFile << "      <td align='right'><font size='1.5'><a href='https://v8docs.nodesource.com/'target='_blank'>Official V8 Documentation</a></font></td>\n";
     mdFile << "    </tr>\n";
     mdFile << "  </table>\n";
     mdFile << "<article>\n";
 
     mdFile.close();    
     
-    std::stringstream csvPath;
-    csvPath << HOME << "/bin/heap-metrics.csv";
-
+    // ------------------------------------------------------------------------------------------
+    // Assemble and stream the CSV content to file
     std::fstream csvFile;
     csvFile.open(csvPath.str().c_str(), std::fstream::out);
     
@@ -183,6 +239,9 @@ const char* HOME;
     csvFile << "GC Prologue Notifications, " << m_GCPrologueCallbackCalled << "\n";
     
     csvFile.close();    
+
+    // ------------------------------------------------------------------------------------------
+    // Successful Dump
 
     // bool return
     args.GetReturnValue().Set(v8::Boolean::New(m_pIsolate, true));
@@ -221,8 +280,13 @@ void UpdateHeapValuesGCC(v8::Isolate *isolate, v8::GCType type, v8::GCCallbackFl
 
 void InitHeapMetrics()
 {
-    // Instatiate the singlton object
+    // First call to GetInstance() will instatiate the singlton object
 	HeapMetrics::GetInstance();
+}
+
+void GetHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)
+{
+	HeapMetrics::GetInstance()->GetHeapMetrics( args );
 }
 
 void DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args)

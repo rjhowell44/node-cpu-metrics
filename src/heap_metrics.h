@@ -48,6 +48,8 @@ class HeapMetrics : public node::ObjectWrap
         // Heap profiler to enable/disable object tracking.
         v8::HeapProfiler * m_pHeapProfiler;	
         
+        size_t m_HeapSizeLimitAtCtor;
+        
         HeapMetricsType * m_pUsedHeapSize;
         HeapMetricsType * m_pTotalHeapSize;
         HeapMetricsType * m_pTotalPhysicalSize;
@@ -63,6 +65,7 @@ class HeapMetrics : public node::ObjectWrap
     
     public:
         static HeapMetrics * GetInstance();
+        void GetHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args);
         void DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args);
         
         // Note: to be called by the GCC prologue call back only.  
@@ -75,15 +78,18 @@ class HeapMetrics : public node::ObjectWrap
         
 };
 
-// C style wrapper functions
+// C style wrapper functions - node entry points
 
 /// Called by init.cpp to instantiate the singlton HeapMetrics object.
 void InitHeapMetrics();
 
-// Called be the 'using' script to Dump all current statistics to heapstats.md
+// Called be the 'client' script to Get all current statistics
+void GetHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args);
+
+// Called be the 'client' script to Dump all current statistics to heapstats.html
 void DumpHeapMetrics(const v8::FunctionCallbackInfo<v8::Value> & args);
 
-// Called by the 'client' script to Force GC/ S
+// Called by the 'client' script to Force GC (--expose_gc must be enabled)
 void ForceGC(const v8::FunctionCallbackInfo<v8::Value> & args);
 
 

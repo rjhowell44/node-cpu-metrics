@@ -14,7 +14,7 @@
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "mocha ./Test/consume_heap.js"
+    "test": "mocha ./test/"
   },
   "keywords": [
     "heap",
@@ -24,8 +24,10 @@
     "metrics",
     "development",
     "tools",
+    "utility",
     "profiler",
-    "V8"
+    "V8",
+    "Testspace"
   ],
   "license": "MIT",
   "bugs": {

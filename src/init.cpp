@@ -34,6 +34,7 @@ void init (v8::Handle <v8::Object> exports, v8::Handle<v8::Object> module)
     heap_metrics::InitHeapMetrics();
 
     // Map the client API's
+    NODE_SET_METHOD(exports, "GetHeapMetrics", heap_metrics::GetHeapMetrics);
     NODE_SET_METHOD(exports, "DumpHeapMetrics", heap_metrics::DumpHeapMetrics);
     NODE_SET_METHOD(exports, "ForceGC", heap_metrics::ForceGC);
 }

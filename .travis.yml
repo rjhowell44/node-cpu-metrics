@@ -16,9 +16,12 @@ addons:
    
 install:
   - npm install
-  - mkdir -p $HOME/bin
+  
+    # Install the testspace Client
+  - mkdir -p $HOME/bin  # already added to "Travis Path Variable" by default, even though the dir does not exist
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux-dev.tgz | tar -zxvf- -C $HOME/bin
   - testspace config url http://${TESTSPACE_ACCESS_TOKEN}:@robert.stridespace.com
 
 after_script:  
+    #matrix build. push files for each node version into a unique folder eg. "/Node-6/Metrics/heap-metrics.html" 
   - testspace [Node-$TRAVIS_NODE_VERSION/Metrics]$HOME/bin/heap-metrics.html{$HOME/bin/heap-metrics.csv}
