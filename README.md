@@ -85,12 +85,13 @@ The following timeline charts were produced by pushing changes (over 28 commits)
 
 ![heap_metrics](images/heap-usage-vs-gc-events.png)
 
-More important than the actual heap numbers are the trends over successive commits, as they show unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code commits.  Unexplained increases can even be a sign of newly introduced memory leaks.  
+More important than the actual heap numbers are the trends over successive commits, as they hightight any unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code commits.  Unexplained increases can even be a sign of newly introduced memory leaks.  
 
-The charts above (unintentionally) show an interesting price point on heap usage (on a Travis server).  When the `peek used size` exceeds the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
+The charts above (unintentionally) show an interesting price point on heap usage (on a Travis server).  When the `peek used size` reach the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
+
 ---
 ### Testspace Metric Setup
-**Note:** *This is a onetime setup for a parent branch only. After using `git branch`, pushing test results and the above metric files from your CI -- running the new branch for the first time -- will create a new Space with all metric charts and settings from the parent branch automatically
+**Note:** *This is a onetime setup for a parent branch only. After using `git branch`, pushing test results and the above metric files from your CI -- running the new branch for the first time -- will create a new Space with all metric charts and settings from the parent branch automatically*
 
 To setup the metrics shown above, once you've pushed the first set of metric files -- `heap_metrics.html` and `heap_metrics.cvs` -- to your Testspace Project:
 
