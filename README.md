@@ -34,9 +34,9 @@ heap_metrics.DumpHeapMetrics()
 
 ---
 ### Description
-Enable and dump `Heap Profiler Metrics` to monitor the effects of code changes on heap usage for the life of the branch. 
+Enable and dump `Heap Profiler Metrics` to monitor the effects of code changes on heap usage for the life of each branch. 
 
-Node Heap Metrics is written in C++, wrapped as a Node. The implementation makes use of Google's open source V8 Heap Profiler included with Node Js.  ([Official V8 Documentation](https://v8docs.nodesource.com/))
+Node Heap Metrics is written in C++, wrapped as a Node. The implementation makes use of the V8 Heap Profiler included with Node Js.  ([Official V8 Documentation](https://v8docs.nodesource.com/))
 
 Heap metrics, maintained by the node, are update on V8's garbage collection (GC) Prologue Notifications -- in other words, just before GC -- ensuring peak measurements for the following metrics:
  * Heap Used
@@ -80,8 +80,8 @@ Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics
 ```
 
 ---
-### Metric Trends
-The following timeline charts were produced by pushing changes made to the test script `Test/consume_heap.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.
+### Testspace Metric Trends
+The following timeline charts were produced by pushing changes made to the test script `Test/consume_heap.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.*
 
 ![heap_metrics](images/heap-usage-vs-gc-events.png)
 
@@ -90,7 +90,7 @@ More important than the actual heap numbers are the trends over successive commi
 The charts above show an interesting price point of heap usage (on a Travis server).  When the `peek used size` exceeds the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 
 ---
-### Metric Setup
+### Testspace Metric Setup
 **Note:** *This is a onetime setup for a parent branch only. After using `git branch`, pushing test results and the above metric files from your CI -- running the new branch for the first time -- will create a new Space with all metric charts and settings from the parent branch automatically
 
 To setup the metrics shown above, once you've pushed the first set of metric files -- `heap_metrics.html` and `heap_metrics.cvs` -- to your Testspace Project:
@@ -100,7 +100,6 @@ To setup the metrics shown above, once you've pushed the first set of metric fil
   3. from the New Metrics dialog, select the metric to create (from the heap_metrics.csv file)
   4. select the `customize` button - see settings below for the two charts pictured above.
  
-*Note: This is a onetime setup for a parent branch only. After using `git branch`, pushing new result to the new branch will create a new Space with with all metric charts and settings from the parent branch
 <br>
 
 ![new-metric-dialog](images/new-metric-dialog.png)
@@ -109,4 +108,4 @@ To setup the metrics shown above, once you've pushed the first set of metric fil
 ![peak-heap-metrics-settings](images/peak-heap-metrics-settings.png)
 <br>
 
-![new-metric-dialog](gc-event-metrics-settings.png)
+![new-metric-dialog](images/gc-event-metrics-settings.png)
