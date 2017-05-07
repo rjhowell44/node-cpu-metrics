@@ -1,8 +1,9 @@
 # Node Heap Metrics
 
 [![Build Status](https://travis-ci.org/rjhowell44/node-heap-metrics.svg?branch=master)](https://travis-ci.org/rjhowell44/node-heap-metrics)
-[![Space Metric](http://robert.stridespace.com/spaces/2652/metrics/3231/badge?token=6ca6adddd90184c574387d838e1330ee664fb65b)](http://robert.stridespace.com/spaces/2652/schema/Node-6/Metrics/heap-metrics.md "Node-6 Peak Heap Metrics")
-[![Space Metric](http://robert.stridespace.com/spaces/2652/metrics/3232/badge?token=de0d6fe4ad59572dcf429918f1080cbe446aca3c)](http://robert.stridespace.com/spaces/2652/schema/Node-6/Metrics/heap-metrics.md "GC Prologue Notifications")
+[![Space Health](https://rjhowell44.testspace.com/spaces/1381/badge?token=359de93564c3a2cf5a09c77429774e5f24d6d6e4)](https://rjhowell44.testspace.com/spaces/1381 "Test Cases")
+[![Space Metric](https://rjhowell44.testspace.com/spaces/1381/metrics/3228/badge?token=a95fe25f7a2570f4c906d13d612a48d75542e550)](https://rjhowell44.testspace.com/spaces/1381/schema/Node-6/Metrics/heap-metrics.html "Node-6 Peak Heap Metrics")
+[![Space Metric](https://rjhowell44.testspace.com/spaces/1381/metrics/3230/badge?token=928ba4d048606d026bcafddb310ca905041902e3)](https://rjhowell44.testspace.com/spaces/1381/schema/Node-6/Metrics/heap-metrics.html "Node-6 GC Events")
 
 ---
 ## Installation
