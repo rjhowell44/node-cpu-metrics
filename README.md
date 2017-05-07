@@ -4,12 +4,12 @@
 [![Space Health](https://rjhowell44.testspace.com/spaces/1381/badge?token=359de93564c3a2cf5a09c77429774e5f24d6d6e4)](https://rjhowell44.testspace.com/spaces/1381 "Test Cases")
 [![Space Metric](https://rjhowell44.testspace.com/spaces/1381/metrics/3228/badge?token=a95fe25f7a2570f4c906d13d612a48d75542e550)](https://rjhowell44.testspace.com/spaces/1381/schema/Node-6/Metrics/heap-metrics.html "Node-6 Peak Heap Metrics")
 [![Space Metric](https://rjhowell44.testspace.com/spaces/1381/metrics/3230/badge?token=928ba4d048606d026bcafddb310ca905041902e3)](https://rjhowell44.testspace.com/spaces/1381/schema/Node-6/Metrics/heap-metrics.html "Node-6 GC Events")
-
+[![npm version](https://badge.fury.io/js/heap-metrics.svg)](https://badge.fury.io/js/heap-metrics)
 ---
 ## Installation
 
 ```
-- npm install node-heap-metrics
+- npm install heap-metrics
 
 ```
 
@@ -49,7 +49,7 @@ The class is implemented as a singleton. The first script to `require( 'heap_met
 ---
 ### API Description
 
-calling `heap_metrics.GetHeap()` will return the following object
+calling `heapMetrics.GetHeapMetrics()` will return the following object
 
 ```javascript
 { 'Heap Size Limit': '1,499,136 KB',
@@ -68,7 +68,7 @@ calling `heap_metrics.GetHeap()` will return the following object
      'At last': '36,259 KB' } }
 ```     
 
-Calling `heap_metrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
+Calling `heapMetrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
 
 ![heap metrics](images/heap_metrics.png)
 
