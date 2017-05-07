@@ -19,18 +19,18 @@
 
 ```javascript
 // require statement will enable V8 Heap Profiling
-var heap_metrics = require( 'heap_metrics.node' );
+var heapMetrics = require( 'heap_metrics.node' );
 
 //  ---- run some tests ----
 
 // optionally, force final GC before dump (requires --expose_gc)
-heap_metrics.ForceGC();
+heapMetrics.ForceGC();
 
 // get metrics and log to console
-log.console(heap_metrics.GetHeapMetrics)
+ console.log(heapMetrics.GetHeapMetrics)
 
 // dump metrics to file
-heap_metrics.DumpHeapMetrics()
+heapMetrics.DumpHeapMetrics()
 ```
 
 ---
