@@ -1,6 +1,6 @@
 {
   "name": "heap-metrics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dump heap profiles after test .",
   "main": "include.js",
   "repository": {
@@ -8,7 +8,9 @@
     "url": "git+https://github.com/rjhowell44/node-heap-metrics.git"
   },
   "author": "Robert Howell <rjhowell44@gmail.com>",
-  "engines": { "node": ">= 4.6.2" },
+  "engines": {
+    "node": ">= 4.6.2"
+  },
   "devDependencies": {
     "mocha": "*"
   },
