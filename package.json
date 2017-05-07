@@ -1,6 +1,6 @@
 {
   "name": "heap-metrics",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dump heap metrics after test to be tracked over all commits for the life of the branch.",
   "main": "include.js",
   "repository": {
