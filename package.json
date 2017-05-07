@@ -14,19 +14,13 @@
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "mocha ./test/"
+    "test": "mocha  ./test/"
   },
   "keywords": [
     "heap",
     "memory",
-    "peak",
-    "measurements",
     "metrics",
-    "development",
-    "tools",
-    "utility",
     "profiler",
-    "V8",
     "Testspace"
   ],
   "license": "MIT",
