@@ -27,10 +27,10 @@ var heapMetrics = require( 'heap_metrics.node' );
 heapMetrics.ForceGC();
 
 // get metrics and log to console
-console.log(heapMetrics.GetHeapMetrics)
+console.log(heapMetrics.GetHeapMetrics);
 
 // dump metrics to file
-heapMetrics.DumpHeapMetrics()
+heapMetrics.DumpHeapMetrics();
 ```
 
 ---
@@ -72,7 +72,7 @@ Calling `heapMetrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.
 
 ![heap metrics](images/heap_metrics.png)
 
-**Optionally** - you can then push the metric files -- along with the test results, code coverage, and other metrics -- to [Testspace](www.testspace.com) in your CI .yml file (Travis, Circle CI, AppYayor, etc) 
+**Optionally** - you can then push the metric files -- along with the test results, code coverage, and other metrics -- to [Testspace](https://www.testspace.com/) in your CI .yml file (Travis, Circle CI, AppYayor, etc) 
 (requires a free Testspace account)
 
 ```
