@@ -1,6 +1,6 @@
 {
   "name": "heap-metrics",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Dump heap metrics after test to be tracked over all commits for the life of the branch.",
   "repository": {
     "type": "git",
