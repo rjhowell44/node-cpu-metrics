@@ -27,7 +27,7 @@ var heapMetrics = require( 'heap_metrics.node' );
 heapMetrics.ForceGC();
 
 // get metrics and log to console
-console.log(heapMetrics.GetHeapMetrics);
+console.log(heapMetrics.GetHeapMetrics());
 
 // dump metrics to file
 heapMetrics.DumpHeapMetrics();
