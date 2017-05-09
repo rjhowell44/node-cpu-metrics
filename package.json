@@ -1,13 +1,13 @@
 {
   "name": "heap-metrics",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Dump heap metrics after test to be tracked over all commits for the life of the branch.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rjhowell44/node-heap-metrics.git"
   },
   "author": "Robert Howell <rjhowell44@gmail.com>",
-  "main" : "./index.js",
+  "main": "./index.js",
   "engines": {
     "node": "4 || 5 || 6 || 7"
   },
