@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="2.465" tests="2" failures="0">
-  <testsuite name="Root Suite" timestamp="2017-05-11T03:37:41" tests="0" failures="0" time="0">
+<testsuites name="Mocha Tests" time="2.434" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2017-05-11T16:41:59" tests="0" failures="0" time="0">
   </testsuite>
-  <testsuite name="DumpHeapMetrics" timestamp="2017-05-11T03:37:41" tests="1" file="/home/ubuntu/workspace/test/dump_heap_metrics.js" failures="0" time="1.253">
-    <testcase name="DumpHeapMetrics should return true" time="1.253" classname="should return true">
+  <testsuite name="DumpHeapMetrics" timestamp="2017-05-11T16:41:59" tests="1" file="/home/ubuntu/workspace/test/dump_heap_metrics.js" failures="0" time="1.226">
+    <testcase name="DumpHeapMetrics should return true" time="1.226" classname="should return true">
     </testcase>
   </testsuite>
-  <testsuite name="GetHeapMetrics" timestamp="2017-05-11T03:37:42" tests="1" file="/home/ubuntu/workspace/test/get_heap_metrics.js" failures="0" time="1.212">
-    <testcase name="GetHeapMetrics should return true" time="1.212" classname="should return true">
+  <testsuite name="GetHeapMetrics" timestamp="2017-05-11T16:42:00" tests="1" file="/home/ubuntu/workspace/test/get_heap_metrics.js" failures="0" time="1.208">
+    <testcase name="GetHeapMetrics should return true" time="1.208" classname="should return true">
     </testcase>
   </testsuite>
 </testsuites>
