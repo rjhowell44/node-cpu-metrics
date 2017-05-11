@@ -44,6 +44,6 @@ void init (v8::Handle <v8::Object> exports, v8::Handle<v8::Object> module)
 //
 //     const heap_metrics = require( 'metrics.node' );
 
-NODE_MODULE(heap_metrics, init);
+NODE_MODULE(adon, init);
 
 }; // 

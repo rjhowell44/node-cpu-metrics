@@ -1,0 +1,1 @@
+cmd_Release/obj.target/heap_metrics.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=heap_metrics.node -o Release/obj.target/heap_metrics.node -Wl,--start-group Release/obj.target/heap_metrics/src/init.o Release/obj.target/heap_metrics/src/heap_metrics.o -Wl,--end-group 
