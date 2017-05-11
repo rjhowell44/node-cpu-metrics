@@ -16,11 +16,12 @@
     "bindings": "~1.2.1"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "mocha-junit-reporter": "~1.13.0"
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "mocha  ./test/ -R xunit > xunit.xml"
+    "test": "mocha  ./test/ --reporter mocha-junit-reporter"
   },
   "keywords": [
     "heap",
