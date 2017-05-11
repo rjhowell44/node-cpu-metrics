@@ -16,7 +16,6 @@ addons:
    
 install:
   - npm install
-  - npm install mocha-junit-reporter --save-dev
 
     # Install the testspace Client
   - mkdir -p $HOME/bin  # already added to "Travis Path Variable" by default, even though the dir does not exist
