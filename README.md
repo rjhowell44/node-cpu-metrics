@@ -17,6 +17,7 @@ or globally
 - npm install -g heap-metrics
 
 ```
+Note: see `env` and `addon` requirements for `.travis.yml` builds further below.
 
 ---
 ### Usage
@@ -24,7 +25,7 @@ or globally
 
 ```javascript
 // require statement will enable V8 Heap Profiling
-var heapMetrics = require( 'heap_metrics' );
+var heapMetrics = require( 'heap_metr' );
 
 //  ---- run some tests ----
 
@@ -85,6 +86,23 @@ The C++ class is implemented as a singleton. The first script to `require( 'heap
 ```
 
 ---
+
+### Travis Build requirements
+Starting with Node 4, V8 requires g++ which is not the default for Travis.
+
+``` json
+env:
+ - CXX=g++-4.8
+ 
+addons:
+ apt:
+  sources:
+   - ubuntu-toolchain-r-test
+  packages:
+   - g++-4.8
+```
+
+
 ### Testspace Metric Trends
 The following timeline charts were produced by pushing changes (over 28 commits) made to the test script `Test/dump_heap_metrics.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.*
 

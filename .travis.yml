@@ -20,7 +20,7 @@ install:
     # Install the testspace Client
   - mkdir -p $HOME/bin  # already added to "Travis Path Variable" by default, even though the dir does not exist
   - curl -s https://testspace-client.s3.amazonaws.com/testspace-linux-dev.tgz | tar -zxvf- -C $HOME/bin
-  - testspace config url ${TESTSPACE_ACCESS_TOKEN}:@rjhowell44.testspace.com
+  - testspace config url https://rjhowell44.testspace.com
 
 after_script:  
     # matrix build. push files for each node version into a unique folder eg. "/Node-6/Metrics/heap-metrics.html" 
