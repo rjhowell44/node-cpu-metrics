@@ -25,7 +25,7 @@ Note: see `env` and `addon` requirements for `.travis.yml` builds further below.
 
 ```javascript
 // require statement will enable V8 Heap Profiling
-var heapMetrics = require( 'heap_metr' );
+var heapMetrics = require( 'heap_metrics' );
 
 //  ---- run some tests ----
 
@@ -41,7 +41,7 @@ heapMetrics.DumpHeapMetrics();
 
 ---
 ### Description
-Enable and dump `Heap Profiler Metrics` to monitor the effects of code changes on heap usage for the life of each branch. 
+Enable and dump `Heap Profiler Metrics` to monitor the effects of code changes and dependency updates on heap usage for the life of each branch. 
 
 Heap Metrics is a `native addon` written in C++ to minimize overhead and intrusion. The implementation makes use of the V8 Heap Profiler included with Node JS.  ([Official V8 Documentation](https://v8docs.nodesource.com/))
 Heap metrics, maintained by the node, are update on V8's garbage collection (GC) Prologue Notifications -- in other words, just before GC -- ensuring **peak measurements** for the following metrics:
@@ -87,8 +87,8 @@ The C++ class is implemented as a singleton. The first script to `require( 'heap
 
 ---
 
-### Travis Build requirements
-Starting with Node 4, V8 requires g++ which is not the default for Travis.
+### Travis Build Requirements
+Starting with Node 4, V8 requires g++ 4.8 to build native addons.  Add the following to your `.travis.yml` file to update the build environment.
 
 ``` json
 env:
@@ -108,7 +108,7 @@ The following timeline charts were produced by pushing changes (over 28 commits)
 
 ![heap_metrics](images/heap-usage-vs-gc-events.png)
 
-More important than the actual heap numbers are the trends over successive commits, as they hightight any unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code commits.  Unexplained increases can even be a sign of newly introduced memory leaks.  
+More important than the actual heap numbers are the trends over successive commits, as they hightight any unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code commits and package updates.  Unexplained increases can even be a sign of newly introduced memory leaks.  
 
 The charts above (unintentionally) show an interesting price point on heap usage (on a Travis server).  When the `peek used size` reach the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 
