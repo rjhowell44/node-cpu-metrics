@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 extern "C" {
     
-void init (v8::Handle <v8::Object> exports, v8::Handle<v8::Object> module)
+void init (v8::Local<v8::Object> exports)
 {
     // Instantiate the Singleton Heap Metrics Object
     heap_metrics::InitHeapMetrics();
@@ -42,8 +42,8 @@ void init (v8::Handle <v8::Object> exports, v8::Handle<v8::Object> module)
 // Associate the init() function (above) as the entry point to the Node module. 
 // The function will be invoked on execution of the JavaScript require():
 //
-//     const heap_metrics = require( 'metrics.node' );
+//     var heap_metrics = require( 'metrics.node' );
 
-NODE_MODULE(adon, init);
+NODE_MODULE(heap_metrics, init);
 
 }; // 

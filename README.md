@@ -12,6 +12,11 @@
 - npm install heap-metrics
 
 ```
+or globally
+```
+- npm install -g heap-metrics
+
+```
 
 ---
 ### Usage
@@ -19,7 +24,7 @@
 
 ```javascript
 // require statement will enable V8 Heap Profiling
-var heapMetrics = require( 'heap_metrics.node' );
+var heapMetrics = require( 'heap_metrics' );
 
 //  ---- run some tests ----
 
@@ -37,19 +42,18 @@ heapMetrics.DumpHeapMetrics();
 ### Description
 Enable and dump `Heap Profiler Metrics` to monitor the effects of code changes on heap usage for the life of each branch. 
 
-Node Heap Metrics is written in C++, wrapped as a Node. The implementation makes use of the V8 Heap Profiler included with Node Js.  ([Official V8 Documentation](https://v8docs.nodesource.com/))
-
-Heap metrics, maintained by the node, are update on V8's garbage collection (GC) Prologue Notifications -- in other words, just before GC -- ensuring peak measurements for the following metrics:
+Heap Metrics is a `native addon` written in C++ to minimize overhead and intrusion. The implementation makes use of the V8 Heap Profiler included with Node JS.  ([Official V8 Documentation](https://v8docs.nodesource.com/))
+Heap metrics, maintained by the node, are update on V8's garbage collection (GC) Prologue Notifications -- in other words, just before GC -- ensuring **peak measurements** for the following metrics:
  * Heap Used
  * Heap Size
  * Physical Size
 
-The class is implemented as a singleton. The first script to `require( 'heap_metrics.node' )` will intantiate the  object and **start heap profiling**. All subsequent calls to require() will return the singleton object while profilling is ongoing. 
+The C++ class is implemented as a singleton. The first script to `require( 'heap_metrics' )` will intantiate the  object and **start heap profiling**. All subsequent calls to require() will return the singleton object while profilling is ongoing. 
 
 ---
 ### API Description
 
-calling `heapMetrics.GetHeapMetrics()` will return the following object
+**GetHeapMetrics()** returns the following object
 
 ```javascript
 { 'Heap Size Limit': '1,499,136 KB',
@@ -68,11 +72,11 @@ calling `heapMetrics.GetHeapMetrics()` will return the following object
      'At last': '36,259 KB' } }
 ```     
 
-Calling `heapMetrics.DumpHeapMetrics()` will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
+**DumpHeapMetrics()** will produce 2 files: 1) **heap_metrics.html** 2) **heap_metrics.csv** -- both in `$(HOME)/bin` which must exist prior to calling (as of the current, initial release of 1.0.0) - the contents of each are shown below 
 
 ![heap metrics](images/heap_metrics.png)
 
-**Optionally** - you can then push the metric files -- along with the test results, code coverage, and other metrics -- to [Testspace](https://www.testspace.com/) in your CI .yml file (Travis, Circle CI, AppYayor, etc) 
+**Optionally** - you can then push the metric files -- along with the **test results**, **code coverage**, and other metrics -- to [Testspace](https://www.testspace.com/) in your CI .yml file (Travis, Circle CI, AppYayor, etc) 
 (requires a free Testspace account)
 
 ```

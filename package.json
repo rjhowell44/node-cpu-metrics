@@ -13,6 +13,7 @@
   },
   "gypfile": true,
   "dependencies": {
+    "node-gyp": "~3.6.1",
     "bindings": "~1.2.1"
   },
   "devDependencies": {
@@ -27,7 +28,10 @@
     "heap",
     "memory",
     "metrics",
+    "native",
+    "addon",
     "profiler",
+    "v8",
     "Testspace"
   ],
   "license": "MIT",
