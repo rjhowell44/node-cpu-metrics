@@ -109,7 +109,7 @@ addons:
 
 ---
 ### TDD Mocha Test
-The `mochaDumpHeapMetrics.js` script has been added to the heap-metrics `bin` for convenience and example. On install, npm will symlink that file into **prefix/bin** for global installs, or **./node_modules/.bin/** for local installs – and will be available on the path.
+The `mochaDumpHeapMetrics.js` script has been added to the heap-metrics `bin` for convenience and example. On install, npm will symlink the file into **prefix/bin** for global installs, or **./node_modules/.bin/** for local installs – and will be available on the path.
 
 ```
 var heapMetrics = require('heap-metrics'),
@@ -124,11 +124,11 @@ describe('DumpHeapMetrics', function () {
 
 ---
 ### Testspace Metric Trends
-The following timeline charts were produced by pushing changes (over 28 commits) made to the test script `Test/dump_heap_metrics.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.*
+The following timeline charts were produced by pushing changes (over 28 commits) made to the test script `Test/dump_heap_metrics.js` to this repository.  The test script consumes heap memory which can be easily increased or decreased. The  `metric files` are pushed from the `.travis.yml` file in this repository.
 
 ![heap_metrics](images/heap-usage-vs-gc-events.png)
 
-More important than the actual heap numbers are the trends over successive commits, as they hightight any unexpected increases in heap usage.  Unexplained jumps are often caused by unintended side effects from code commits and package updates.  Unexplained increases can even be a sign of newly introduced memory leaks.  
+More important than the actual heap numbers are the trends over successive commits, as they hightight any unexpected increases in heap usage.  ***Unexplained jumps are often caused by unintended side effects from code commits and package updates.***  Unexplained increases can even be a sign of newly introduced memory leaks.
 
 The charts above (unintentionally) show an interesting price point on heap usage (on a Travis server).  When the `peek used size` reach the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 
