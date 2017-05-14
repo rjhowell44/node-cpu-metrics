@@ -39,6 +39,11 @@ console.log(heapMetrics.GetHeapMetrics());
 heapMetrics.DumpHeapMetrics();
 ```
 
+or add to your mocha cli as your final test case. The following script will be available on the path after package install (see below for details)
+```javascript
+    mochaDumpHeapMetrics.js
+```
+
 ---
 ### Description
 Enable and dump `Heap Profiler Metrics` to monitor the effects of code changes and dependency updates on heap usage for the life of each branch. 
@@ -88,7 +93,7 @@ The C++ class is implemented as a singleton. The first script to `require( 'heap
 ---
 
 ### Travis Build Requirements
-Starting with Node 4, V8 requires g++ 4.8 to build native addons.  Add the following to your `.travis.yml` file to update the build environment.
+Starting with Node 4, V8 requires ```g++ 4.8``` to build native addons.  Add the following to your `.travis.yml` file to update the build environment.
 
 ``` json
 env:
@@ -102,7 +107,22 @@ addons:
    - g++-4.8
 ```
 
+---
+### TDD Mocha Test
+The `mochaDumpHeapMetrics.js` script has been added to the heap-metrics `bin` for convenience and example. On install, npm will symlink that file into **prefix/bin** for global installs, or **./node_modules/.bin/** for local installs – and will be available on the path.
 
+```
+var heapMetrics = require('heap-metrics'),
+    expect = require('expect');
+
+describe('DumpHeapMetrics', function () {
+    it('should return true', function () {
+        expect((heapMetrics.DumpHeapMetrics())).to.equal(true);
+    });
+});
+```
+
+---
 ### Testspace Metric Trends
 The following timeline charts were produced by pushing changes (over 28 commits) made to the test script `Test/dump_heap_metrics.js` to this repository.  The test script consumes heap memory which can be increased or decreased by changing the exit/limit in a simple for-loop. The loop is then nested in a secondary loop. GC will be schedule each time the inner loop exists to free up all heap memory acquired in the inner scope. Increasing the limit on the outer loop will increase the number of GC events, but will also put more demand on heap usage, as the GC scheduler will fall behind. The  `metric files` are pushed from the `.travis.yml` file in this repository.*
 

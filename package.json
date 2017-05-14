@@ -20,6 +20,9 @@
     "mocha": "*",
     "mocha-junit-reporter": "~1.13.0"
   },
+  "bin" :  { 
+    "heap-metrics" : "./bin/mochaDumpHeapMetrics.js" 
+  }, 
   "scripts": {
     "install": "node-gyp rebuild",
     "test": "mocha  ./test/ --reporter mocha-junit-reporter"
