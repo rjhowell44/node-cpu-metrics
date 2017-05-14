@@ -130,7 +130,7 @@ The following timeline charts were produced by pushing changes (over 28 commits)
 
 More important than the actual heap numbers are the trends over successive commits, as they hightight any unexpected increases in heap usage.  ***Unexplained jumps are often caused by unintended side effects from code commits and package updates.***  Unexplained increases can even be a sign of newly introduced memory leaks.
 
-The charts above (unintentionally) show an interesting price point on heap usage (on a Travis server).  When the `peek used size` reach the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
+The charts above (unintentionally) show an interesting price point on heap usage (on a Travis server).  When the `peek used size` reaches the `peak physical size`, the physical size decreases dramatically, with the number of GC events nearly doubling. 
 
 ---
 ### Testspace Metric Setup
