@@ -1,7 +1,7 @@
 /*
 The MIT License
 
-Copyright (c) 2010-2017 Google, Inc. http://angularjs.org
+Copyright (c) 2017-Present, ROBERT HOWELL
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,18 @@ THE SOFTWARE.
 
 #include <v8.h>
 #include <node.h>
-#include "heap_metrics.h"
+#include "cpu_metrics.h"
 
 extern "C" {
     
 void init (v8::Local<v8::Object> exports)
 {
     // Instantiate the Singleton Heap Metrics Object
-    heap_metrics::InitHeapMetrics();
+    cpu_metrics::InitCpuMetrics();
 
     // Map the client API's
-    NODE_SET_METHOD(exports, "GetHeapMetrics", heap_metrics::GetHeapMetrics);
-    NODE_SET_METHOD(exports, "DumpHeapMetrics", heap_metrics::DumpHeapMetrics);
-    NODE_SET_METHOD(exports, "ForceGC", heap_metrics::ForceGC);
+    NODE_SET_METHOD(exports, "StartProfiling", cpu_metrics::StartProfiling);
+    NODE_SET_METHOD(exports, "StopProfiling", cpu_metrics::StopProfiling);
 }
 
 // Associate the init() function (above) as the entry point to the Node module. 

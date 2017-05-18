@@ -1,10 +1,10 @@
 {
-  "name": "heap-metrics",
-  "version": "1.2.0",
-  "description": "Dump heap metrics after test to be tracked over all commits for the life of the branch.",
+  "name": "cpu-metrics",
+  "version": "0.0.1",
+  "description": "Dump cpu profile metrics after test to be tracked over all commits for the life of the branch.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rjhowell44/node-heap-metrics.git"
+    "url": "git+https://github.com/rjhowell44/cpu-heap-metrics.git"
   },
   "author": "Robert Howell <rjhowell44@gmail.com>",
   "main": "./index.js",
@@ -13,8 +13,6 @@
   },
   "gypfile": true,
   "dependencies": {
-    "node-gyp": "~3.6.1",
-    "bindings": "~1.2.1"
   },
   "devDependencies": {
     "mocha": "*",
@@ -28,18 +26,17 @@
     "test": "mocha  ./test/ --reporter mocha-junit-reporter"
   },
   "keywords": [
-    "heap",
-    "memory",
+    "cpu",
+    "profile",
     "metrics",
     "native",
     "addon",
-    "profiler",
     "v8",
     "Testspace"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rjhowell44/node-heap-metrics/issues"
+    "url": "https://github.com/rjhowell44/cpu-heap-metrics/issues"
   },
-  "homepage": "https://github.com/rjhowell44/node-heap-metrics#readme"
+  "homepage": "https://github.com/rjhowell44/cpu-heap-metrics#readme"
 }

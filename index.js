@@ -1,3 +1,3 @@
-var heapMetrics = require('./build/Release/heap_metrics.node');
+var cpuMetrics = require('./build/Release/cpu_metrics.node');
 
-module.exports = heapMetrics;
+module.exports = cpuMetrics;

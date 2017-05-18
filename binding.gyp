@@ -1,12 +1,12 @@
 {
   'targets': [
     {
-      'target_name': 'heap_metrics',
+      'target_name': 'cpu_metrics',
       'include_dirs': [
       ],
       'sources': [
         'src/init.cpp',
-        'src/heap_metrics.cpp'
+        'src/cpu_metrics.cpp'
       ],
     }
   ]
