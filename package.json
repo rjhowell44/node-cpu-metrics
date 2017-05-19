@@ -1,6 +1,6 @@
 {
   "name": "cpu-metrics",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dump cpu profile metrics after test to be tracked over all commits for the life of the branch.",
   "repository": {
     "type": "git",
@@ -12,8 +12,7 @@
     "node": "4 || 5 || 6 || 7"
   },
   "gypfile": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "*",
     "mocha-junit-reporter": "~1.13.0"
