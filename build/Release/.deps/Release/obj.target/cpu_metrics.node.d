@@ -1,1 +1,0 @@
-cmd_Release/obj.target/cpu_metrics.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=cpu_metrics.node -o Release/obj.target/cpu_metrics.node -Wl,--start-group Release/obj.target/cpu_metrics/src/init.o Release/obj.target/cpu_metrics/src/cpu_metrics.o -Wl,--end-group 
