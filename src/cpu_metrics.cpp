@@ -40,7 +40,7 @@ const char* CpuMetrics::m_pColumnHeaders[] = {
     "<button onclick='sortTable(2,0)'>Script</button>", 
     "<button onclick='sortTable(3,1)'>Hits</button>", 
     "<button onclick='sortTable(4,1)'>Lines</button>", 
-    "<button onclick='sortTable(5,0)'>De-opt</button>", 
+    "<button onclick='sortTable(5,0)'>De-opted</button>", 
     "<button onclick='sortTable(6,0)'>Bailed</button>", 
     NULL };
 
@@ -152,7 +152,6 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
     v8::Local< v8::String > functionNameStr = pCpuProfileNode->GetFunctionName();
     v8::Local< v8::String > scriptNameStr = pCpuProfileNode->GetScriptResourceName();
     
-    
     v8::String::Utf8Value functionName(functionNameStr);
     v8::String::Utf8Value scriptName(scriptNameStr);
 
@@ -169,6 +168,9 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
     std::string bailoutReasonStr = pCpuProfileNode->GetBailoutReason(); 
     std::string bailoutCompareStr = "no reason";
     std::string bailed = (0 == bailoutReasonStr.compare(bailoutCompareStr)) ? "No" : "Yes";
+    
+    const std::vector<v8::CpuProfileDeoptInfo>& deoptInfos = pCpuProfileNode->GetDeoptInfos(); 
+    std::string deopted = (0 == deoptInfos.size()) ? "No" : "Yes";
 
     std::vector<std::string> rowData = { 
         ssUid.str(), 
@@ -176,6 +178,7 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
         ssScriptName.str(), 
         ssHitCount.str(),
         ssLineCount.str(),
+        deopted,
         bailed
     }; 
 
