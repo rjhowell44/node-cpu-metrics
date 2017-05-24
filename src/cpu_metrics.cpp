@@ -159,16 +159,15 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
 
     if (ssScriptName.str().find("server") != std::string::npos)
     {
-        std::stringstream ssUid, ssFunctionName, ssHitCount, ssLineCount;
-        v8::String::Utf8Value functionName(functionNameStr);
+        v8::Local< v8::String > v8strFunctionName = pCpuProfileNode->GetFunctionName();
+        v8::String::Utf8Value utf8FunctionName(v8strFunctionName);
 
-        v8::Local< v8::String > functionNameStr = pCpuProfileNode->GetFunctionName();
-    
-    
+        std::stringstream ssUid, ssFunctionName, ssHitCount, ssLineCount;
+
         for (int i=0; i<depth; i++) { ssFunctionName << ". "; }
-        
+
         ssUid << pCpuProfileNode->GetNodeId();
-        ssFunctionName << *functionName;
+        ssFunctionName << *utf8FunctionName;
         ssHitCount << pCpuProfileNode->GetHitCount();
         ssLineCount << pCpuProfileNode->GetHitLineCount();
     
