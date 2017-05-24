@@ -149,18 +149,20 @@ void CpuMetrics::StopProfiling(const v8::FunctionCallbackInfo<v8::Value> & args)
 
 void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int depth)
 {
-    v8::Local< v8::String > functionNameStr = pCpuProfileNode->GetFunctionName();
-    v8::Local< v8::String > scriptNameStr = pCpuProfileNode->GetScriptResourceName();
-    
-    v8::String::Utf8Value functionName(functionNameStr);
-    v8::String::Utf8Value scriptName(scriptNameStr);
+    // Get the script name with absolute path for this node, and convert to Utf8 string
+    v8::Local< v8::String > v8strScriptName = pCpuProfileNode->GetScriptResourceName();
+    v8::String::Utf8Value utf8ScriptName(v8strScriptName);
 
+    // inatial a Script Name stream object with the Utf8Value
     std::stringstream ssScriptName;
-    ssScriptName << *scriptName;
+    ssScriptName << *utf8ScriptName;
 
     if (ssScriptName.str().find("server") != std::string::npos)
     {
         std::stringstream ssUid, ssFunctionName, ssHitCount, ssLineCount;
+        v8::String::Utf8Value functionName(functionNameStr);
+
+        v8::Local< v8::String > functionNameStr = pCpuProfileNode->GetFunctionName();
     
     
         for (int i=0; i<depth; i++) { ssFunctionName << ". "; }
