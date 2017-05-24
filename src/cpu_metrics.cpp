@@ -62,7 +62,7 @@ CpuMetrics::CpuMetrics()
     
     m_pCpuMetricsTable = new CpuMetricsTable("CPU Metrics", m_pColumnHeaders);
 
-    m_sampleRate = 1000;
+    m_sampleRate = 100;
     m_pCpuProfiler->SetSamplingInterval(m_sampleRate);
 }
 
