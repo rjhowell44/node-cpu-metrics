@@ -24,4 +24,4 @@ install:
 
 after_script:  
     # matrix build. push files for each node version into a unique folder eg. "/Node-6/Metrics/heap-metrics.html" 
-  - testspace [Node-$TRAVIS_NODE_VERSION/Tests]./test-results.xml [Node-$TRAVIS_NODE_VERSION/Metrics]$HOME/bin/cpu-metrics.html
+  - testspace [Node-$TRAVIS_NODE_VERSION/Tests]./test-results.xml [Node-$TRAVIS_NODE_VERSION/Metrics]$HOME/bin/cpu-metrics.html "+$HOME/bin/cpu-metrics.html{cpu-metrics-file}"
