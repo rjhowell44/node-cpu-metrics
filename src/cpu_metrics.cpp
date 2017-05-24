@@ -155,38 +155,46 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
     v8::String::Utf8Value functionName(functionNameStr);
     v8::String::Utf8Value scriptName(scriptNameStr);
 
-    std::stringstream ssUid, ssFunctionName, ssScriptName, ssHitCount, ssLineCount;
-
-    for (int i=0; i<depth; i++) { ssFunctionName << ". "; }
-    
-    ssUid << pCpuProfileNode->GetNodeId();
-    ssFunctionName << *functionName;
+    std::stringstream ssScriptName;
     ssScriptName << *scriptName;
-    ssHitCount << pCpuProfileNode->GetHitCount();
-    ssLineCount << pCpuProfileNode->GetHitLineCount();
 
-    std::string bailoutReasonStr = pCpuProfileNode->GetBailoutReason(); 
-    std::string bailoutCompareStr = "no reason";
-    std::string bailed = (0 == bailoutReasonStr.compare(bailoutCompareStr)) ? "No" : "Yes";
+    if (ssScriptName.str().find("server") != std::string::npos)
+    {
+        std::stringstream ssUid, ssFunctionName, ssHitCount, ssLineCount;
     
-    const std::vector<v8::CpuProfileDeoptInfo>& deoptInfos = pCpuProfileNode->GetDeoptInfos(); 
-    std::string deopted = (0 == deoptInfos.size()) ? "No" : "Yes";
-
-    std::vector<std::string> rowData = { 
-        ssUid.str(), 
-        ssFunctionName.str(), 
-        ssScriptName.str(), 
-        ssHitCount.str(),
-        ssLineCount.str(),
-        deopted,
-        bailed
-    }; 
-
-    m_pCpuMetricsTable->AddTableRow(rowData);
-
+    
+        for (int i=0; i<depth; i++) { ssFunctionName << ". "; }
+        
+        ssUid << pCpuProfileNode->GetNodeId();
+        ssFunctionName << *functionName;
+        ssHitCount << pCpuProfileNode->GetHitCount();
+        ssLineCount << pCpuProfileNode->GetHitLineCount();
+    
+        std::string bailoutReasonStr = pCpuProfileNode->GetBailoutReason(); 
+        std::string bailoutCompareStr = "no reason";
+        std::string bailed = (bailoutReasonStr.compare(bailoutCompareStr) == 0) ? "No" : "Yes";
+        
+        const std::vector<v8::CpuProfileDeoptInfo>& deoptInfos = pCpuProfileNode->GetDeoptInfos(); 
+        std::string deopted = (deoptInfos.size() == 0) ? "No" : "Yes";
+    
+        std::vector<std::string> rowData = { 
+            ssUid.str(), 
+            ssFunctionName.str(), 
+            ssScriptName.str(), 
+            ssHitCount.str(),
+            ssLineCount.str(),
+            deopted,
+            bailed
+        }; 
+    
+        m_pCpuMetricsTable->AddTableRow(rowData);
+        
+        depth++;
+    }
+    
     for (int i=0; i<pCpuProfileNode->GetChildrenCount(); i++)
     {
-        ProcessNode(pCpuProfileNode->GetChild(i), ++depth );
+        ProcessNode(pCpuProfileNode->GetChild(i), depth );
     }
 
 }
