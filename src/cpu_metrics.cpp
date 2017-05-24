@@ -172,13 +172,22 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
         ssLineCount << pCpuProfileNode->GetHitLineCount();
     
         std::string bailoutReasonStr = pCpuProfileNode->GetBailoutReason(); 
-        std::string bailoutCompareStr = "no reason";
-        std::string bailed = (bailoutReasonStr.compare(bailoutCompareStr) == 0) ? "No" : "Yes";
+        std::string bailed;
+        if (bailoutReasonStr.compare("no reason") == 0)
+        {
+            bailed = "No";
+        }
+        else
+        {
+            bailed =  "Yes";
+            ssScriptName << "<pre> - bailed: " << bailoutReasonStr << "</pre>";
+        }
         
         const std::vector<v8::CpuProfileDeoptInfo>& deoptInfos = pCpuProfileNode->GetDeoptInfos(); 
         std::string deopted = (deoptInfos.size() == 0) ? "No" : "Yes";
     
-        std::vector<std::string> rowData = { 
+        std::vector<std::string> rowData = 
+        { 
             ssUid.str(), 
             ssFunctionName.str(), 
             ssScriptName.str(), 

@@ -1,4 +1,4 @@
-var cpuMetrics = require( './../build/Release/cpu_metrics.node' );
+var cpuMetrics = require( './../../build/Release/cpu_metrics.node' );
 
 
 

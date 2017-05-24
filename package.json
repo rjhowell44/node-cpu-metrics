@@ -1,6 +1,6 @@
 {
   "name": "cpu-metrics",
-  "version": "0.0.5",
+  "version": "0.0.2",
   "description": "Dump cpu profile metrics after test to be tracked over all commits for the life of the branch.",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "mocha  ./test/ --reporter mocha-junit-reporter"
+    "test": "mocha --recursive ./test/ --reporter mocha-junit-reporter"
   },
   "keywords": [
     "cpu",
