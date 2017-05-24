@@ -1,6 +1,6 @@
 {
   "name": "cpu-metrics",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dump cpu profile metrics after test to be tracked over all commits for the life of the branch.",
   "repository": {
     "type": "git",
