@@ -53,6 +53,8 @@ class CpuMetrics : public node::ObjectWrap
         
         CpuMetricsTable * m_pCpuMetricsTable;
         
+        int m_nodeUid;
+        
         
     protected:
         CpuMetrics();

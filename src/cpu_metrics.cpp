@@ -62,6 +62,7 @@ CpuMetrics::CpuMetrics()
     
     m_pCpuMetricsTable = new CpuMetricsTable("CPU Metrics", m_pColumnHeaders);
 
+    m_nodeUid = 0;
     m_sampleRate = 100;
     m_pCpuProfiler->SetSamplingInterval(m_sampleRate);
 }
@@ -127,13 +128,7 @@ void CpuMetrics::StopProfiling(const v8::FunctionCallbackInfo<v8::Value> & args)
     mdFile.open(htmlPath.str().c_str(), std::fstream::out);
 
     mdFile << "<article>\n";
-    mdFile << "  <header>\n";    
-    mdFile << "    <h1> Node CPU Metrics</h1>\n";
     mdFile << "  </header>\n";
-    mdFile << "  <p>\n";
-    mdFile << "    V8 CPU Profiler metrics recorded " << timeStr << "\n"; 
-    mdFile << "  </br>\n";
-    mdFile << "  </p>\n";
     mdFile <<    m_pCpuMetricsTable->GetTable().c_str();    
     mdFile <<    m_pCpuMetricsTable->GetScript().c_str();    
     mdFile << "<article>\n";
@@ -149,11 +144,14 @@ void CpuMetrics::StopProfiling(const v8::FunctionCallbackInfo<v8::Value> & args)
 
 void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int depth)
 {
+    // increment the unique node id for all nodes, regardless of filter
+    m_nodeUid++;
+    
     // Get the script name with absolute path for this node, and convert to Utf8 string
     v8::Local< v8::String > v8strScriptName = pCpuProfileNode->GetScriptResourceName();
     v8::String::Utf8Value utf8ScriptName(v8strScriptName);
 
-    // inatial a Script Name stream object with the Utf8Value
+    // inatialize a Script Name stream object with the Utf8Value (* operator)
     std::stringstream ssScriptName;
     ssScriptName << *utf8ScriptName;
 
@@ -166,7 +164,7 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
 
         for (int i=0; i<depth; i++) { ssFunctionName << ". "; }
 
-        ssUid << pCpuProfileNode->GetNodeId();
+        ssUid << m_nodeUid;
         ssFunctionName << *utf8FunctionName;
         ssHitCount << pCpuProfileNode->GetHitCount();
         ssLineCount << pCpuProfileNode->GetHitLineCount();
