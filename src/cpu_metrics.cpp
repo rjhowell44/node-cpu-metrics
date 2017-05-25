@@ -35,13 +35,13 @@ namespace cpu_metrics
 CpuMetrics* CpuMetrics::m_pInstance = NULL; 
 
 const char* CpuMetrics::m_pColumnHeaders[] = { 
-    "<button onclick='sortTable(0,1)'>Uid</button>", 
-    "<button onclick='sortTable(1,0)'>Function</button>", 
-    "<button onclick='sortTable(2,0)'>Script</button>", 
-    "<button onclick='sortTable(3,1)'>Hits</button>", 
-    "<button onclick='sortTable(4,1)'>Lines</button>", 
-    "<button onclick='sortTable(5,0)'>De-opted</button>", 
-    "<button onclick='sortTable(6,0)'>Bailed</button>", 
+    "<button onclick='sortTable(this,0,1)'>Uid</button>", 
+    "<button onclick='sortTable(this,1,0)'>Function</button>", 
+    "<button onclick='sortTable(this,2,0)'>Script</button>", 
+    "<button onclick='sortTable(this,3,1)'>Hits</button>", 
+    "<button onclick='sortTable(this,4,1)'>Lines</button>", 
+    "<button onclick='sortTable(this,5,0)'>De-opted</button>", 
+    "<button onclick='sortTable(this,6,0)'>Bailed</button>", 
     NULL };
 
 

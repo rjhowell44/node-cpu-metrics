@@ -167,7 +167,7 @@ private:
         m_script << "                    bottomValue = (isNumber) ? parseInt(bottomValue, 10) : bottomValue;\n";
         m_script << "                    return (topValue - bottomValue)\n";
         m_script << "                }, ascending);\n";
-        m_script << "            }=\n";
+        m_script << "            }\n";
         m_script << "        }\n";
 
         m_script << "  </script>\n";
