@@ -74,6 +74,7 @@ CpuMetrics::~CpuMetrics()
 
 void CpuMetrics::StartProfiling(const v8::FunctionCallbackInfo<v8::Value> & args)
 {
+
     m_pCpuProfiler->StartProfiling(v8::String::NewFromUtf8(m_pIsolate, "CPU Metrics"), true);
 
     args.GetReturnValue().Set(v8::Boolean::New(m_pIsolate, true));
@@ -85,6 +86,10 @@ void CpuMetrics::StopProfiling(const v8::FunctionCallbackInfo<v8::Value> & args)
 
     v8::CpuProfile * pCpuProfile = m_pCpuProfiler->StopProfiling(v8::String::NewFromUtf8(m_pIsolate, "CPU Metrics"));
     
+    //v8::Local<v8::Value> filterValue = args.Data();
+    //v8::Local<v8::String> filterString = filterValue.ToString(m_pIsolate);
+
+
     // ------------------------------------------------------------------------------------------
     // assemble the metrics table content - start with the table caption - 
     
@@ -155,7 +160,7 @@ void CpuMetrics::ProcessNode(const v8::CpuProfileNode * pCpuProfileNode, int dep
     std::stringstream ssScriptName;
     ssScriptName << *utf8ScriptName;
 
-    if (ssScriptName.str().find("server") != std::string::npos)
+    if (ssScriptName.str().find("core") != std::string::npos)
     {
         v8::Local< v8::String > v8strFunctionName = pCpuProfileNode->GetFunctionName();
         v8::String::Utf8Value utf8FunctionName(v8strFunctionName);
